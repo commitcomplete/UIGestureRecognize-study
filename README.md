@@ -25,4 +25,7 @@ ex : UILabel -> UIView -> UIViewController -> UIWindow
 참고 : https://seizze.github.io/2019/11/26/iOS%EC%9D%98-Responder%EC%99%80-Responder-Chain-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0.html
 ```
 
+---
+### 매크로 Thinking
+UIPanGesture을 이용한 지속적인 좌푯값 없데이트를 통해 손과 발의 위치를 지속적으로 변경한다.
 
