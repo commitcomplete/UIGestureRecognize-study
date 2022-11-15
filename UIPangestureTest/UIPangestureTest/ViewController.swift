@@ -14,9 +14,14 @@ class ViewController: UIViewController {
     var circleView1 = UIView()
     var circleView2 = UIView()
     var circleView3 = UIView()
-    
+    var settingview : UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        settingview = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        settingview!.layer.cornerRadius = 50
+        settingview!.backgroundColor = .blue
+        
         view.addSubview(UIImageView(image: UIImage(named: "back")))
         circleView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         circleView.center = CGPoint( // circleView의 가운데가 중심점이 되어 이동한다!!
@@ -25,12 +30,15 @@ class ViewController: UIViewController {
         )
         circleView.layer.cornerRadius = 25 // 원 모양으로 만듬
         circleView.backgroundColor = UIColor.red
-        self.view.addSubview(circleView) // 여기서 view는 ViewController가 가지고 있는 view!!
+        self.view.addSubview(circleView)
+        // 여기서 view는 ViewController가 가지고 있는 view!!
         // UIPanGestureRecognizer는 target(ViewController)에서 drag가 감지되면 action을 실행한다.
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.drag))
         // panGesture가 보는 view는 circleView가 된다.
         circleView.addGestureRecognizer(panGesture)
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
+        circleView.addGestureRecognizer(longPressGesture)
         circleView1.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         circleView1.center = CGPoint( // circleView의 가운데가 중심점이 되어 이동한다!!
             x: UIScreen.main.bounds.width / 3,
@@ -83,6 +91,28 @@ class ViewController: UIViewController {
         sender.view!.center = CGPoint(x: sender.view!.center.x + translation.x, y: sender.view!.center.y + translation.y)
         sender.setTranslation(.zero, in: self.view)
         // 0으로 움직인 값을 초기화 시켜준다.
+    }
+    
+    @objc func longPress(sender : UILongPressGestureRecognizer){
+        switch sender.state{
+        case .possible:
+            print("possible")
+        case .began:
+            let point = sender.location(in: self.view)
+            settingview?.center = circleView.center
+            super.view.addSubview(settingview!)
+        case .changed:
+            print(sender.location(in: self.view))
+        case .ended:
+            settingview?.removeFromSuperview()
+        case .cancelled:
+            print("possible")
+        case .failed:
+            print("possible")
+        @unknown default:
+            print("possible")
+        }
+       
     }
 }
 
